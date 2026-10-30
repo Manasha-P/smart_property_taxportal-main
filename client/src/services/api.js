@@ -12,8 +12,8 @@ import {
 } from "./mockDataProvider";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
-  timeout: 5000,
+  baseURL: import.meta.env.VITE_API_URL || "https://smart-property-taxportal-main-backend.onrender.com/api",
+  timeout: 8000,
 });
 
 // Attach Authorization header if token exists

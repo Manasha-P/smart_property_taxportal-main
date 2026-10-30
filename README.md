@@ -7,10 +7,19 @@ Official digital treasury platform linking municipal property tax assessments wi
 
 ---
 
-## 🌐 Live Deployments
+## 🌐 Live Production Deployments
 
 * **Frontend Portal (Vercel):** [https://smart-property-taxportal-main.vercel.app](https://smart-property-taxportal-main.vercel.app)
-* **Backend Repository:** [https://github.com/Manasha-P/smart_property_taxportal-main](https://github.com/Manasha-P/smart_property_taxportal-main)
+* **Backend API Service (Render):** [https://smart-property-taxportal-main-backend.onrender.com](https://smart-property-taxportal-main-backend.onrender.com)
+* **GitHub Repository:** [https://github.com/Manasha-P/smart_property_taxportal-main](https://github.com/Manasha-P/smart_property_taxportal-main)
+
+---
+
+### 📡 Live Backend API Endpoints (Render)
+* **Health Check:** `https://smart-property-taxportal-main-backend.onrender.com/api/health`
+* **Admin Overview:** `https://smart-property-taxportal-main-backend.onrender.com/api/taxpayer/admin/overview`
+* **Taxpayer Search:** `POST https://smart-property-taxportal-main-backend.onrender.com/api/taxpayers/search`
+* **Officer Login:** `POST https://smart-property-taxportal-main-backend.onrender.com/api/auth/login`
 
 ---
 
