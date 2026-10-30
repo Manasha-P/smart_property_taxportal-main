@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Taxpayer = require("../models/Taxpayer");
 const TaxPayment = require("../models/TaxPayment");
 const TaxpayerDataProvider = require("../utils/taxpayerDataProvider");
@@ -13,6 +14,18 @@ const {
   detectQualityAlerts,
 } = require("../utils/taxCalculationService");
 const { generateSurveyRecommendations } = require("../utils/surveyRecommendationService");
+
+// Safe helper for AI Analysis cache
+const getCachedAnalysis = async (taxpayerId) => {
+  if (mongoose.connection && mongoose.connection.readyState === 1) {
+    try {
+      return await AIAnalysis.findOne({ taxpayerId });
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
+};
 
 // Helper: find taxpayer by demo identifier, 12-digit numeric Aadhaar, propertyId or ObjectId
 const findTaxpayer = async (identifier, res) => {
@@ -220,7 +233,7 @@ const getCompliance = async (req, res) => {
     const monthlySummary = buildMonthlySummary(payments);
     const bankSummary = buildBankSummary(payments);
 
-    let cached = await AIAnalysis.findOne({ taxpayerId: taxpayer._id });
+    let cached = await getCachedAnalysis(taxpayer._id);
 
     if (cached && cached.surveyRecommendations && cached.surveyRecommendations.length > 0) {
       return res.json({
@@ -280,14 +293,19 @@ const analyzeCompliance = async (req, res) => {
     const monthlySummary = buildMonthlySummary(payments);
     const bankSummary = buildBankSummary(payments);
 
-    // Delete existing cache and re-analyze
-    await AIAnalysis.deleteMany({ taxpayerId: taxpayer._id });
     const analysis = await generateAIAnalysis(taxpayer, annualSummary, monthlySummary, bankSummary, overallTotals);
 
-    await AIAnalysis.create({
-      taxpayerId: taxpayer._id,
-      ...analysis,
-    });
+    try {
+      if (mongoose.connection && mongoose.connection.readyState === 1) {
+        await AIAnalysis.deleteMany({ taxpayerId: taxpayer._id });
+        await AIAnalysis.create({
+          taxpayerId: taxpayer._id,
+          ...analysis,
+        });
+      }
+    } catch (cacheErr) {
+      console.warn("AI cache write note:", cacheErr.message);
+    }
 
     res.json({
       ...analysis,
@@ -312,7 +330,7 @@ const getTaxReport = async (req, res) => {
     const bankSummary = buildBankSummary(payments);
     const alerts = detectQualityAlerts(taxpayer, payments, totals);
 
-    let cached = await AIAnalysis.findOne({ taxpayerId: taxpayer._id });
+    let cached = await getCachedAnalysis(taxpayer._id);
     if (!cached) {
       cached = generateRuleBasedAnalysis(taxpayer, annualSummary, monthlySummary, bankSummary, totals);
     }
@@ -358,8 +376,8 @@ const getTaxReport = async (req, res) => {
 // @route GET /api/taxpayer/admin/overview
 const getAdminOverview = async (req, res) => {
   try {
-    const allTaxpayers = await Taxpayer.find({});
-    const allPayments = await TaxPayment.find({});
+    const allTaxpayers = await TaxpayerDataProvider.getAllTaxpayers();
+    const allPayments = await TaxpayerDataProvider.getAllPayments();
 
     let totalCityTaxDue = 0;
     let totalCityTaxPaid = 0;
@@ -500,7 +518,7 @@ const getFullProfile = async (req, res) => {
     const bankSummary = buildBankSummary(payments);
     const monthlySummary = buildMonthlySummary(payments);
 
-    let cached = await AIAnalysis.findOne({ taxpayerId: taxpayer._id });
+    let cached = await getCachedAnalysis(taxpayer._id);
     let aiAnalysis = null;
 
     if (cached) {
