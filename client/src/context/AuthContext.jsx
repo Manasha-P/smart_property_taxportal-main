@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import api from "../services/api";
+import { authLogin, authRegister } from "../services/api";
 
 const AuthContext = createContext();
 
@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   const login = async (email, password) => {
-    const { data } = await api.post("/auth/login", { email, password });
+    const { data } = await authLogin(email, password);
     const { token, ...userData } = data;
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password) => {
-    const { data } = await api.post("/auth/register", { name, email, password });
+    const { data } = await authRegister(name, email, password);
     const { token, ...userData } = data;
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
