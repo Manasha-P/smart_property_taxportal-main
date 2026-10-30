@@ -12,6 +12,36 @@ const { notFound, errorHandler } = require("./middleware/errorHandler");
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.json({
+    status: "ok",
+    service: "AI-Based Property Tax Self-Assessment Tracking Portal Backend",
+    version: "1.0.0",
+    healthCheck: "/api/health",
+    endpoints: {
+      health: "/api/health",
+      overview: "/api/taxpayer/admin/overview",
+      search: "POST /api/taxpayers/search",
+      auth: "POST /api/auth/login",
+    },
+  });
+});
+
+app.get("/api", (req, res) => {
+  res.json({
+    status: "ok",
+    service: "AI-Based Property Tax Self-Assessment Tracking Portal API",
+    version: "1.0.0",
+    healthCheck: "/api/health",
+    endpoints: {
+      health: "/api/health",
+      overview: "/api/taxpayer/admin/overview",
+      search: "POST /api/taxpayers/search",
+      auth: "POST /api/auth/login",
+    },
+  });
+});
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Smart Property Tax Portal API running" });
 });
