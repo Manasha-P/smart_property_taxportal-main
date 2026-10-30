@@ -48,6 +48,10 @@ const generateRuleBasedAnalysis = (taxpayer, annualSummary, monthlySummary, bank
   // Factual human readable AI summary based strictly on MongoDB data
   const summaryText = `Taxpayer ${taxpayerName} owns a ${taxpayer.propertyType} property located at ${taxpayer.propertyAddress} valued at ₹${taxpayer.propertyValue.toLocaleString("en-IN")}. The current total tax due is ₹${totalTaxAmount.toLocaleString("en-IN")}, with ₹${totalPaid.toLocaleString("en-IN")} paid to date and an outstanding balance of ₹${totalOutstanding.toLocaleString("en-IN")}. Overall payment progress is ${paymentProgress}%, establishing a tax status of "${overallStatus}".`;
 
+  const { generateSurveyRecommendations } = require("./surveyRecommendationService");
+  const surveyRecommendations = generateSurveyRecommendations(taxpayer, overallTotals, monthlySummary, complianceLevel);
+  const officerReviewRequired = surveyRecommendations.some((r) => r.type === "Officer review" || r.priority === "HIGH");
+
   return {
     complianceLevel,
     summaryText,
@@ -57,6 +61,8 @@ const generateRuleBasedAnalysis = (taxpayer, annualSummary, monthlySummary, bank
     historicalCompliance,
     currentStatusText,
     recommendation,
+    surveyRecommendations,
+    officerReviewRequired,
     source: "rule-based",
   };
 };

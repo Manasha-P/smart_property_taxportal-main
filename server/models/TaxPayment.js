@@ -34,6 +34,31 @@ const taxPaymentSchema = new mongoose.Schema(
       enum: ["Paid", "Partially Paid", "Unpaid"],
       required: true,
     },
+    transactionRef: {
+      type: String,
+      trim: true,
+    },
+    maskedAccount: {
+      type: String,
+      default: "XXXX-XXXX-0000",
+    },
+    paymentPurpose: {
+      type: String,
+      default: "Property Tax Payment",
+    },
+    paymentDueDate: {
+      type: Date,
+    },
+    transactionStatus: {
+      type: String,
+      enum: ["Success", "Pending", "Failed", "Cancelled"],
+      default: "Success",
+    },
+    reconciliationStatus: {
+      type: String,
+      enum: ["Reconciled", "Unreconciled", "Discrepancy"],
+      default: "Reconciled",
+    },
   },
   { timestamps: true }
 );

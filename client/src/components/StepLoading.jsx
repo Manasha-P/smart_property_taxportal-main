@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import { NationalEmblemIcon } from "./Icons";
 
 const STEPS = [
-  "Verifying taxpayer record...",
-  "Retrieving property information...",
-  "Collecting payment records...",
-  "Calculating tax information...",
-  "AI is analyzing payment compliance...",
-  "Tax profile generated successfully.",
+  "Validating citizen identity via masked Aadhaar vault...",
+  "Querying central municipal GIS land cadastre...",
+  "Consolidating inter-bank CBS electronic payment logs...",
+  "Computing statutory Demand-Collection-Balance (DCB) ledger...",
+  "Performing statutory compliance scrutiny under Municipal Code Sec 120...",
+  "Official property tax assessment dossier authenticated.",
 ];
 
 const StepLoading = ({ onComplete }) => {
@@ -25,17 +26,24 @@ const StepLoading = ({ onComplete }) => {
           return prev;
         }
       });
-    }, 450); // step interval for realistic loading animation
+    }, 450);
 
     return () => clearInterval(timer);
   }, [onComplete]);
 
   return (
     <div className="step-loading-container">
-      <div className="step-loading-card">
+      <div className="step-loading-card gov-dossier-card" style={{ maxWidth: "580px" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "0.75rem" }}>
+          <NationalEmblemIcon size={42} color="#d4af37" />
+        </div>
         <div className="spinner-ring"></div>
-        <h3>Automated Tax Processing</h3>
-        <p className="step-subtitle">Executing intelligent data retrieval & AI analysis pipeline</p>
+        <h3 style={{ color: "var(--gov-navy-900)", fontWeight: 800 }}>
+          Statutory Verification & Treasury Clearing
+        </h3>
+        <p className="step-subtitle">
+          Executing official cadastre registry query and inter-bank reconciliation pipeline
+        </p>
 
         <div className="step-list">
           {STEPS.map((stepText, idx) => {
@@ -47,7 +55,7 @@ const StepLoading = ({ onComplete }) => {
                 className={`step-item ${isDone ? "step-done" : ""} ${isCurrent ? "step-active" : ""}`}
               >
                 <div className="step-icon">{isDone ? "✓" : isCurrent ? "⏳" : "○"}</div>
-                <div className="step-text">{stepText}</div>
+                <div className="step-text font-medium">{stepText}</div>
               </div>
             );
           })}

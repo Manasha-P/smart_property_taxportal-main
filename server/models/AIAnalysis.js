@@ -36,6 +36,46 @@ const aiAnalysisSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    dataHash: {
+      type: String,
+      default: "",
+    },
+    surveyRecommendations: [
+      {
+        title: { type: String, required: true },
+        type: {
+          type: String,
+          enum: [
+            "Payment reminder",
+            "Document verification",
+            "Property assessment survey",
+            "Payment reconciliation",
+            "Routine monitoring",
+            "Officer review",
+          ],
+          required: true,
+        },
+        reason: { type: String, required: true },
+        evidence: { type: String, default: "" },
+        financialCalculation: { type: String, default: "" },
+        priority: {
+          type: String,
+          enum: ["LOW", "MEDIUM", "HIGH"],
+          default: "MEDIUM",
+        },
+        proposedAction: { type: String, required: true },
+        responsibleDepartment: { type: String, default: "Municipal Revenue Directorate" },
+        recommendedFollowUpDate: { type: String, default: "" },
+      },
+    ],
+    officerReviewRequired: {
+      type: Boolean,
+      default: false,
+    },
+    version: {
+      type: Number,
+      default: 1,
+    },
     source: {
       type: String,
       enum: ["ai-api", "rule-based"],

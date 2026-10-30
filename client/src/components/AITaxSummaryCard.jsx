@@ -1,58 +1,66 @@
-import { AiBrainIcon } from "./Icons";
+import { BuildingGovIcon } from "./Icons";
 
 const AITaxSummaryCard = ({ taxpayer, totals, aiAnalysis }) => {
   if (!taxpayer || !totals) return null;
 
   return (
-    <div className="ai-summary-card">
-      <div className="ai-summary-header">
-        <div className="ai-badge flex-align">
-          <AiBrainIcon size={22} color="#0b3d91" /> AI Generated Tax Summary
+    <div className="section-card gov-formal-card">
+      <div className="card-header-styled">
+        <div className="flex-align">
+          <BuildingGovIcon size={20} color="#0b3d91" />
+          <h3 style={{ fontSize: "1.1rem" }}>Statutory Property Assessment & Revenue Summary</h3>
         </div>
-        <span className="source-tag">Source: {aiAnalysis?.source === "ai-api" ? "Claude AI Engine" : "MongoDB Calculation Engine"}</span>
+        <span className="section-badge font-mono">
+          SOURCE: MUNICIPAL CADASTRE & CBS LEDGER
+        </span>
       </div>
 
-      <div className="ai-summary-grid">
-        <div className="summary-item">
-          <span className="summary-label">Taxpayer</span>
-          <span className="summary-value">{taxpayer.name}</span>
+      <div className="info-grid">
+        <div className="info-cell">
+          <span className="label">Registered Taxpayer</span>
+          <span className="value font-semibold">{taxpayer.name}</span>
         </div>
-        <div className="summary-item">
-          <span className="summary-label">Property</span>
-          <span className="summary-value">{taxpayer.propertyType} Property</span>
+        <div className="info-cell">
+          <span className="label">Property Category</span>
+          <span className="value">{taxpayer.propertyType} Property</span>
         </div>
-        <div className="summary-item">
-          <span className="summary-label">Property Value</span>
-          <span className="summary-value">₹{taxpayer.propertyValue?.toLocaleString("en-IN")}</span>
+        <div className="info-cell">
+          <span className="label">Cadastre Capital Value</span>
+          <span className="value font-mono">₹{taxpayer.propertyValue?.toLocaleString("en-IN")}</span>
         </div>
-        <div className="summary-item">
-          <span className="summary-label">Current Annual Tax</span>
-          <span className="summary-value">₹{totals.totalTaxAmount?.toLocaleString("en-IN")}</span>
+        <div className="info-cell">
+          <span className="label">Current Annual Statutory Tax</span>
+          <span className="value font-mono font-bold">₹{totals.totalTaxAmount?.toLocaleString("en-IN")}</span>
         </div>
-        <div className="summary-item">
-          <span className="summary-label">Total Tax Paid</span>
-          <span className="summary-value text-success">₹{totals.totalPaid?.toLocaleString("en-IN")}</span>
+        <div className="info-cell">
+          <span className="label">Total Cleared Remittance</span>
+          <span className="value font-mono font-semibold" style={{ color: "#065f46" }}>
+            ₹{totals.totalPaid?.toLocaleString("en-IN")}
+          </span>
         </div>
-        <div className="summary-item">
-          <span className="summary-label">Outstanding Tax</span>
-          <span className={`summary-value ${totals.totalOutstanding > 0 ? "text-danger" : "text-success"}`}>
+        <div className="info-cell">
+          <span className="label">Outstanding Arrears</span>
+          <span
+            className="value font-mono font-bold"
+            style={{ color: totals.totalOutstanding > 0 ? "#b91c1c" : "#065f46" }}
+          >
             ₹{totals.totalOutstanding?.toLocaleString("en-IN")}
           </span>
         </div>
-        <div className="summary-item">
-          <span className="summary-label">Overall Payment Progress</span>
-          <span className="summary-value">{totals.paymentProgress}%</span>
+        <div className="info-cell">
+          <span className="label">Overall Recovery Ratio</span>
+          <span className="value font-mono">{totals.paymentProgress}%</span>
         </div>
-        <div className="summary-item">
-          <span className="summary-label">Tax Status</span>
-          <span className={`status-tag status-${totals.overallStatus?.replace(/\s+/g, "-").toLowerCase()}`}>
+        <div className="info-cell">
+          <span className="label">Official Standing</span>
+          <span className={`status-pill status-${totals.overallStatus?.replace(/\s+/g, "-").toLowerCase()}`}>
             {totals.overallStatus}
           </span>
         </div>
       </div>
 
       {aiAnalysis?.summaryText && (
-        <div className="ai-summary-text">
+        <div className="gov-statutory-directive" style={{ marginTop: "1rem" }}>
           <p>{aiAnalysis.summaryText}</p>
         </div>
       )}

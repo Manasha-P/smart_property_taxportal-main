@@ -30,6 +30,40 @@ const taxpayerSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    numericAadhaar: {
+      type: String,
+      trim: true,
+      index: true,
+    },
+    propertyUsage: {
+      type: String,
+      enum: ["Owner Occupied", "Rented/Leased", "Mixed Use", "Vacant Land", "Commercial Operations"],
+      default: "Owner Occupied",
+    },
+    propertyAreaSqFt: {
+      type: Number,
+      default: 1200,
+    },
+    annualAssessedTax: {
+      type: Number,
+      default: 0,
+    },
+    assessmentYear: {
+      type: String,
+      default: "2024-25",
+    },
+    hasDocumentationDiscrepancy: {
+      type: Boolean,
+      default: false,
+    },
+    hasAssessmentDiscrepancy: {
+      type: Boolean,
+      default: false,
+    },
+    discrepancyNotes: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

@@ -64,11 +64,16 @@ Respond ONLY with valid JSON (no markdown wrapping).`;
     const cleaned = rawText.replace(/```json|```/g, "").trim();
     const parsed = JSON.parse(cleaned);
 
-    if (!parsed.complianceLevel || !parsed.recommendation || !parsed.summaryText) {
-      throw new Error("AI response missing required fields");
-    }
+    const { generateSurveyRecommendations } = require("./surveyRecommendationService");
+    const surveyRecommendations = generateSurveyRecommendations(taxpayer, overallTotals, monthlySummary, parsed.complianceLevel);
+    const officerReviewRequired = surveyRecommendations.some((r) => r.type === "Officer review" || r.priority === "HIGH");
 
-    return { ...parsed, source: "ai-api" };
+    return {
+      ...parsed,
+      surveyRecommendations,
+      officerReviewRequired,
+      source: "ai-api",
+    };
   } catch (err) {
     console.error("AI API call failed, using rule-based fallback:", err.message);
     return generateRuleBasedAnalysis(taxpayer, annualSummary, monthlySummary, bankSummary, overallTotals);

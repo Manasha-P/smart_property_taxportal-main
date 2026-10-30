@@ -1,4 +1,5 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -18,6 +19,7 @@ app.get("/api/health", (req, res) => {
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/taxpayer", require("./routes/taxpayerRoutes"));
+app.use("/api/taxpayers", require("./routes/taxpayerRoutes"));
 app.use(notFound);
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;

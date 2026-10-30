@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { EmblemIcon, UserIcon, MailIcon, LockIcon } from "../components/Icons";
+import { NationalEmblemIcon, UserIcon, MailIcon, LockIcon, ShieldCheckIcon } from "../components/Icons";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -29,13 +29,18 @@ const Register = () => {
 
   return (
     <div className="auth-web-container">
-      <div className="auth-card-box">
+      <div className="auth-card-box gov-auth-box">
         <div className="auth-card-header">
           <div className="auth-seal-icon">
-            <EmblemIcon size={32} color="#0b3d91" />
+            <NationalEmblemIcon size={46} color="#d4af37" />
           </div>
+          <span className="gov-badge-inline" style={{ marginTop: "0.5rem" }}>
+            CITIZEN DIGITAL TAXATION PORTAL
+          </span>
           <h2>Citizen Account Registration</h2>
-          <p className="auth-subtitle">Smart Property Tax Information Portal</p>
+          <p className="auth-subtitle">
+            Create an authorized taxpayer account for property tracking and e-challan services
+          </p>
         </div>
 
         {error && (
@@ -46,15 +51,15 @@ const Register = () => {
 
         <form className="auth-form-styled" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="reg-name">Full Name (As per Aadhaar)</label>
+            <label htmlFor="reg-name">Full Citizen Name (As per Aadhaar)</label>
             <div className="input-with-icon">
               <span className="input-icon">
-                <UserIcon size={18} color="#64748b" />
+                <UserIcon size={18} color="#0b3d91" />
               </span>
               <input
                 id="reg-name"
                 type="text"
-                placeholder="e.g. Arun Kumar"
+                placeholder="e.g. Ramesh Sharma"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -63,15 +68,15 @@ const Register = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="reg-email">Email Address</label>
+            <label htmlFor="reg-email">Official Email Address</label>
             <div className="input-with-icon">
               <span className="input-icon">
-                <MailIcon size={18} color="#64748b" />
+                <MailIcon size={18} color="#0b3d91" />
               </span>
               <input
                 id="reg-email"
                 type="email"
-                placeholder="e.g. citizen@example.com"
+                placeholder="citizen@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -80,10 +85,10 @@ const Register = () => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="reg-password">Create Password</label>
+            <label htmlFor="reg-password">Create Access Password</label>
             <div className="input-with-icon">
               <span className="input-icon">
-                <LockIcon size={18} color="#64748b" />
+                <LockIcon size={18} color="#0b3d91" />
               </span>
               <input
                 id="reg-password"
@@ -104,16 +109,19 @@ const Register = () => {
             </div>
           </div>
 
-          <button type="submit" className="btn-auth-submit" disabled={loading}>
-            {loading ? "Creating Account..." : "Complete Registration →"}
+          <button type="submit" className="btn-auth-submit flex-center" disabled={loading}>
+            <ShieldCheckIcon size={18} color="#ffffff" />
+            <span>{loading ? "Registering Citizen..." : "Complete Registration →"}</span>
           </button>
         </form>
 
         <div className="auth-footer-links">
-          <p>
-            Already registered? <Link to="/login">Sign In Here</Link>
+          <p style={{ fontSize: "0.86rem", color: "#475569" }}>
+            Already have an officer account? <Link to="/login" style={{ color: "#0b3d91", fontWeight: 700 }}>Officer Sign In</Link>
           </p>
-          <span className="security-notice">🔒 Official Digital Service Portal</span>
+          <span className="security-notice">
+            Protected with 256-Bit SSL Financial Encryption and DigiLocker Integration.
+          </span>
         </div>
       </div>
     </div>
