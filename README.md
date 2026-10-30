@@ -1,15 +1,19 @@
 # AI-Based Property Tax Self-Assessment Tracking Portal
 
-Official digital treasury platform linking municipal property tax assessments with citizen Aadhaar identifiers and multi-bank electronic clearing.
+> 🌐 **Live Deployed Application (Vercel):** [**https://smart-property-taxportal-main.vercel.app**](https://smart-property-taxportal-main.vercel.app)  
+> ⚙️ **Live Backend Service (Render):** [**https://smart-property-taxportal-main-backend.onrender.com**](https://smart-property-taxportal-main-backend.onrender.com)  
+> 🔗 **GitHub Repository:** [**https://github.com/Manasha-P/smart_property_taxportal-main**](https://github.com/Manasha-P/smart_property_taxportal-main)
 
-[![Vercel Deployment](https://img.shields.io/badge/Frontend-Vercel%20Live-brightgreen?style=flat-square&logo=vercel)](https://smart-property-taxportal-main.vercel.app)
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Manasha-P/smart_property_taxportal-main)
+[![Vercel Deployment](https://img.shields.io/badge/Frontend-Vercel%20Live-brightgreen?style=for-the-badge&logo=vercel)](https://smart-property-taxportal-main.vercel.app)
+[![Render Backend](https://img.shields.io/badge/Backend-Render%20Live-46E3B7?style=for-the-badge&logo=render)](https://smart-property-taxportal-main-backend.onrender.com/api/health)
+
+Official digital treasury platform linking municipal property tax assessments with citizen Aadhaar identifiers and multi-bank electronic clearing.
 
 ---
 
 ## 🌐 Live Production Deployments
 
-* **Frontend Portal (Vercel):** [https://smart-property-taxportal-main.vercel.app](https://smart-property-taxportal-main.vercel.app)
+* **Frontend Web Application (Vercel):** [https://smart-property-taxportal-main.vercel.app](https://smart-property-taxportal-main.vercel.app)
 * **Backend API Service (Render):** [https://smart-property-taxportal-main-backend.onrender.com](https://smart-property-taxportal-main-backend.onrender.com)
 * **GitHub Repository:** [https://github.com/Manasha-P/smart_property_taxportal-main](https://github.com/Manasha-P/smart_property_taxportal-main)
 
