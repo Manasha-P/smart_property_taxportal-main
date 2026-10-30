@@ -12,7 +12,7 @@ import {
 } from "./mockDataProvider";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "https://smart-property-taxportal-backend.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL || "/api",
   timeout: 5000,
 });
 
